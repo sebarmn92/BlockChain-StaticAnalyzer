@@ -44,9 +44,13 @@ function openAllFilesFromGitHubRepo(repoOwner, repoName, path = '') {
       });
 
       files.forEach(file =>{
-        console.error(file.fileName);
+        console.error("----------------------------------------------");
+        console.log("=======> FILE NAME: " +file.fileName);
         let result=analyzeJavaScriptSyntax(file.fileContent);
         console.log("Analysis result: ",result);
+        result = detectErrors(file.fileContent);
+        console.log("Rule Analysis result: ");
+        result.forEach(res => console.log(res));
        // analyzeSmartContract(fileContent);
     })
       
@@ -91,4 +95,36 @@ function openAllFilesFromGitHubRepo(repoOwner, repoName, path = '') {
     console.log(url); // Replace with your desired handling of the URL
     downloadGitHubRepository(url);
   });
+
+function detectErrors(code) {
+  const detectedErrors = [];
+
+  errorRules.forEach(rule => {
+    if (rule.check(code)) {
+      detectedErrors.push(rule.ruleId+": "+rule.description);
+    }
+  });
+
+  return detectedErrors;
+}
+
+const errorRules = [
+  {
+    ruleId: "R1",
+    description: "Error Rule 1: Replace this with the specific description",
+    check: code => {
+      return "Core rule check test";
+    }
+  },
+  {
+    ruleId: "R2",
+    description: "Error Rule 2: Replace this with the specific description",
+    check: code => {
+      // Add the logic to check for the violation of this error rule
+    }
+  },
+  // Add more error rules here
+];
+
+
 
