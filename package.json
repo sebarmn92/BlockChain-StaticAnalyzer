@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "eslint": "^8.41.0",
+    "solidity-parser-antlr": "^0.4.11"
+  }
+}
